@@ -1,0 +1,14 @@
+public function sendWebhook($message){
+    include __DIR__ . "/../../config/discord.php";
+	$hook = json encode([ "content" => $message ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+	$ch = curl_init();
+	curl_setopt_array( $ch,
+	    [ CURLOPT_URL -> $webhookurl,
+		    CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => $hook,
+			CURLOPT_HTTPHEADER -> [ "Length" -> strlen($hook), "Content-Type" -> "aplication/json" ] 
+		]);
+		$res = curl_exec($ch);
+		curl_close($ch);
+		return $res;
+}
